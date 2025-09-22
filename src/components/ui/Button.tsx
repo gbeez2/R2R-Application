@@ -11,34 +11,34 @@ import {
 
 const colorStyles = {
   primary:
-    'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-accent-darker dark:text-accent-contrast dark:ring-1 dark:ring-inset dark:ring-accent-dark dark:hover:bg-accent-dark dark:hover:text-accent-contrast dark:hover:ring-accent-base',
+    'bg-electric-blue text-pure-white hover:bg-blue-700 dark:bg-electric-blue dark:text-pure-white dark:hover:bg-blue-600',
   secondary:
-    'text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:ring-1 dark:ring-inset dark:ring-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-300',
+    'text-insulation-black hover:bg-circuit-silver dark:bg-engineer-gray dark:text-circuit-silver dark:hover:bg-circuit-silver dark:hover:text-pure-white',
   filled:
-    'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-accent-darker dark:text-white dark:hover:bg-accent-dark',
+    'bg-electric-blue text-pure-white hover:bg-blue-700 dark:bg-electric-blue dark:text-pure-white dark:hover:bg-blue-600',
   danger:
-    'bg-red-600 text-white hover:bg-red-500 dark:bg-red-600 dark:text-white dark:hover:bg-red-500',
+    'bg-high-voltage-orange text-pure-white hover:bg-orange-600 dark:bg-high-voltage-orange dark:text-pure-white dark:hover:bg-orange-500',
   amber:
-    'bg-amber-500 text-white hover:bg-amber-600 dark:bg-amber-500 dark:text-white dark:hover:bg-amber-600',
-  blue: 'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-blue-600/10 dark:text-blue-600 dark:ring-1 dark:ring-inset dark:ring-blue-600/20 dark:hover:bg-blue-600/10 dark:hover:text-blue-300',
+    'bg-high-voltage-orange text-pure-white hover:bg-orange-600 dark:bg-high-voltage-orange dark:text-pure-white dark:hover:bg-orange-500',
+  blue: 'bg-electric-blue text-pure-white hover:bg-blue-700 dark:bg-electric-blue dark:text-pure-white dark:hover:bg-blue-600',
   blue_filled:
-    'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-blue-600 dark:text-white dark:hover:bg-opacity-90',
-  text: 'text-accent-base hover:text-accent-dark dark:text-accent-base dark:hover:text-accent-dark',
+    'bg-electric-blue text-pure-white hover:bg-blue-700 dark:bg-electric-blue dark:text-pure-white dark:hover:bg-blue-600',
+  text: 'text-electric-blue hover:text-blue-700 dark:text-electric-blue dark:hover:text-blue-400',
   text_gray:
-    'text-gray-200 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-500',
-  disabled: 'bg-zinc-600 text-white cursor-not-allowed hover:bg-zinc-500',
-  light: 'bg-zinc-700 text-white hover:bg-zinc-600',
+    'text-circuit-silver hover:text-insulation-black dark:text-circuit-silver dark:hover:text-pure-white',
+  disabled: 'bg-circuit-silver text-pure-white cursor-not-allowed hover:bg-circuit-silver',
+  light: 'bg-circuit-silver text-insulation-black hover:bg-engineer-gray',
   transparent:
-    'bg-transparent text-zinc-900 hover:bg-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-800',
+    'bg-transparent text-insulation-black hover:bg-circuit-silver dark:text-circuit-silver dark:hover:bg-engineer-gray',
 };
 
 const shapeStyles = {
   default: 'rounded-md px-1 py-1',
   rounded: 'rounded-full px-1 py-1',
   outline:
-    'px-1 py-1 ring-1 ring-inset ring-zinc-900/10 dark:ring-white/10 rounded-md',
+    'px-1 py-1 ring-1 ring-inset ring-electric-blue/20 dark:ring-electric-blue/30 rounded-md',
   outline_wide:
-    'px-2 py-1 ring-1 ring-inset ring-zinc-900/10 dark:ring-white/10 rounded-md',
+    'px-2 py-1 ring-1 ring-inset ring-electric-blue/20 dark:ring-electric-blue/30 rounded-md',
   slim: 'rounded-md px-0.5 py-0.5 h-9 flex items-center justify-center',
 };
 

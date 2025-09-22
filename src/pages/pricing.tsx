@@ -1,208 +1,59 @@
-import { Eye, EyeOff, ChevronDown } from 'lucide-react';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Check, Copy, ChevronDown } from 'lucide-react';
 
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/input';
-import { brandingConfig } from '@/config/brandingConfig';
-import { useUserContext } from '@/context/UserContext';
-import debounce from '@/lib/debounce';
-import { supabase } from '@/lib/supabase';
-
-const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [serverHealth, setServerHealth] = useState(true);
-  const [loginSuccess, setLoginSuccess] = useState(false);
-  const { login, loginWithToken, authState } = useUserContext();
-  const router = useRouter();
-
-  const [rawDeploymentUrl, setRawDeploymentUrl] = useState('');
-  const [sanitizedDeploymentUrl, setSanitizedDeploymentUrl] = useState('');
-
-  // Navigation state
+const Pricing = () => {
+  const [isYearly, setIsYearly] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [showCopyMessage, setShowCopyMessage] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isSolutionsDropdownOpen, setIsSolutionsDropdownOpen] = useState(false);
   const [isResourcesDropdownOpen, setIsResourcesDropdownOpen] = useState(false);
 
-  // Retrieve deployment URL from runtime config or use default
-  const getDeploymentUrl = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.__RUNTIME_CONFIG__?.NEXT_PUBLIC_R2R_DEPLOYMENT_URL &&
-      !window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEPLOYMENT_URL.includes(
-        '__NEXT_PUBLIC_R2R_DEPLOYMENT_URL__'
-      )
-    ) {
-      return window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEPLOYMENT_URL;
-    }
-    return '';
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText('FBOT4U');
+    setCopied(true);
+    setShowCopyMessage(true);
+    setTimeout(() => {
+      setCopied(false);
+      setShowCopyMessage(false);
+    }, 3000);
   };
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const url = getDeploymentUrl();
-      setRawDeploymentUrl(url);
-      setSanitizedDeploymentUrl(url);
-
-      if (window.__RUNTIME_CONFIG__) {
-        if (
-          window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEFAULT_EMAIL &&
-          !window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEFAULT_EMAIL.includes(
-            '__NEXT_PUBLIC_R2R_DEFAULT_EMAIL__'
-          )
-        ) {
-          setEmail(window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEFAULT_EMAIL);
-        }
-
-        if (
-          window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEFAULT_PASSWORD &&
-          !window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEFAULT_PASSWORD.includes(
-            '__NEXT_PUBLIC_R2R_DEFAULT_PASSWORD__'
-          )
-        ) {
-          setPassword(
-            window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEFAULT_PASSWORD
-          );
-        }
-      }
-    }
-  }, []);
-
-  // Health check function - only called after failed login attempts
-  const checkDeploymentHealth = useCallback(async () => {
-    try {
-      const response = await fetch(`${sanitizedDeploymentUrl}/v3/health`);
-      const data = await response.json();
-      const isHealthy = data.results?.message?.trim().toLowerCase() === 'ok';
-      setServerHealth(isHealthy);
-      return isHealthy;
-    } catch (error) {
-      console.error('Health check failed:', error);
-      setServerHealth(false);
-      return false;
-    }
-  }, [sanitizedDeploymentUrl]);
-
-  // Handle login submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await login(email, password, sanitizedDeploymentUrl);
-      setLoginSuccess(true);
-    } catch (error) {
-      console.error('Login failed:', error);
-
-      // Only check server health after a failed login attempt
-      const isServerHealthy = await checkDeploymentHealth();
-
-      let errorMessage = 'An unknown error occurred';
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      } else if (typeof error === 'string') {
-        errorMessage = error;
-      }
-
-      // Provide appropriate error message based on server health
-      const serverStatusMessage = isServerHealthy
-        ? 'The server appears to be running correctly. Please check your credentials and try again.'
-        : 'Unable to communicate with the server. Please verify the server is running at the specified URL.';
-
-      alert(`Login failed. ${serverStatusMessage}\n\nError: ${errorMessage}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Handle successful login redirect
-  useEffect(() => {
-    if (loginSuccess && authState.isAuthenticated) {
-      router.push('/');
-    }
-  }, [loginSuccess, authState.isAuthenticated, router]);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  // OAuth sign-in handler
-  const handleOAuthSignIn = async (provider: 'google' | 'github') => {
-    if (!supabase) {
-      setError(
-        'Supabase client is not configured. OAuth sign-in is unavailable.'
-      );
-      return;
-    }
+  const handleCheckout = async (planName, price) => {
+    console.log('Starting checkout for:', planName, price, isYearly);
 
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: provider,
+      const response = await fetch('/api/checkout_sessions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planName,
+          price,
+          isYearly
+        }),
       });
-      if (error) {
-        throw error;
-      }
 
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
 
-      if (session?.access_token) {
-        await loginWithToken(session.access_token, sanitizedDeploymentUrl);
-        setLoginSuccess(true);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Response data:', data);
+        window.location.href = data.url;
       } else {
-        throw new Error('No access token found after OAuth sign-in');
+        const errorText = await response.text();
+        console.error('Checkout failed:', response.status, errorText);
+        alert('Checkout failed: ' + errorText);
       }
     } catch (error) {
-      console.error('OAuth sign in failed:', error);
-      setError('OAuth sign in failed. Please try again.');
+      console.error('Error:', error);
+      alert('Error initiating checkout: ' + error.message);
     }
   };
-
-  // URL sanitization function
-  const sanitizeUrl = (url: string): string => {
-    if (
-      typeof window !== 'undefined' &&
-      window.__RUNTIME_CONFIG__?.NEXT_PUBLIC_R2R_DEPLOYMENT_URL
-    ) {
-      const configUrl =
-        window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEPLOYMENT_URL;
-      if (!url || url === 'http://' || url === 'https://') {
-        return configUrl;
-      }
-    }
-
-    if (!url || url === 'http://' || url === 'https://') {
-      return '';
-    }
-
-    let sanitized = url.trim();
-    sanitized = sanitized.replace(/\/+$/, '');
-    if (!/^https?:\/\//i.test(sanitized)) {
-      sanitized = 'http://' + sanitized;
-    }
-    sanitized = sanitized.replace(/(https?:\/\/)|(\/)+/g, '$1$2');
-    return sanitized;
-  };
-
-  // Debounced URL sanitization
-  const debouncedSanitizeUrl = useCallback(
-    debounce((url: string) => {
-      setSanitizedDeploymentUrl(sanitizeUrl(url));
-    }, 500),
-    []
-  );
-
-  useEffect(() => {
-    debouncedSanitizeUrl(rawDeploymentUrl);
-  }, [rawDeploymentUrl, debouncedSanitizeUrl]);
 
   // Navigation scroll effect
   useEffect(() => {
@@ -242,8 +93,63 @@ const LoginPage: React.FC = () => {
     };
   }, [lastScrollY]);
 
+  const plans = [
+    {
+      name: 'Unlimited',
+      price: isYearly ? '$12' : '$15',
+      period: 'USD/month',
+      description: 'Best for everyday analysis, reports, and smaller data tasks.',
+      features: [
+        'Unlimited chat messages',
+        'Unlimited access to Formula Generator (web & add-ons)',
+        'Unlimited file uploads',
+        '50MB file upload limit',
+        'Access to all tools (add-ons, data sources, enrichments)',
+        'Increased speed & power (4CPU, 2RAM)',
+        '5 uploaded files / chat',
+        'Unlimited PDF to Excel conversions',
+        '15 enrichments',
+        '1 scheduled report'
+      ],
+      buttonText: 'Buy Monthly →',
+      popular: false
+    },
+    {
+      name: 'Unlimited Plus',
+      price: isYearly ? '$20' : '$25',
+      period: 'USD/month',
+      description: 'Great for machine learning, large files & qualitative analysis',
+      features: [
+        'Everything in Unlimited',
+        '5,000 enrichments / month',
+        '100MB file upload limit',
+        'Higher speed & performance for complex work (6CPU, 3RAM)',
+        '20 uploaded files / chat',
+        'Use on multiple devices at once',
+        '10 scheduled reports'
+      ],
+      buttonText: 'Buy Monthly →',
+      popular: true
+    },
+    {
+      name: 'Unlimited Ultra',
+      price: isYearly ? '$28' : '$35',
+      period: 'USD/month',
+      description: 'Great for big data, machine learning, and qualitative analysis',
+      features: [
+        'Everything in Unlimited Plus',
+        '20,000 enrichments / month',
+        '500MB file upload limit',
+        'Highest speed & performance to handle big data analysis (8CPU, 4RAM)',
+        '20 scheduled reports'
+      ],
+      buttonText: 'Buy Monthly →',
+      popular: false
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-700">
+    <div className="min-h-screen bg-pure-white">
       {/* Navigation */}
       <nav className={`bg-insulation-black sticky top-4 z-50 mx-4 rounded-2xl transition-transform duration-300 ease-in-out ${isNavVisible ? 'translate-y-0' : '-translate-y-full'
         }`}>
@@ -447,149 +353,131 @@ const LoginPage: React.FC = () => {
           </div>
         </div>
       </nav>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-insulation-black mb-6">
+            Choose the plan that's right for you
+          </h1>
 
-      <div className="flex flex-col items-center justify-center min-h-screen p-8 gap-16">
-        <div className="bg-zinc-100 dark:bg-zinc-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md flex flex-col">
-          <div className="flex-grow">
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
-                htmlFor="sanitizedDeploymentUrl"
-              >
-                {brandingConfig.deploymentName} Deployment URL
-              </label>
-              {serverHealth === false && (
-                <span className="text-red-400 text-sm font-bold mb-2 block">
-                  Unable to communicate to the specified deployment. Check its
-                  status or try again.
-                </span>
-              )}
-              <Input
-                id="deploymentUrl"
-                name="deploymentUrl"
-                type="text"
-                placeholder="Deployment URL"
-                value={rawDeploymentUrl}
-                onChange={(e) => setRawDeploymentUrl(e.target.value)}
-                autoComplete="url"
-              />
-            </div>
-
-            <form onSubmit={handleSubmit} className="mt-4">
-              <div className="mb-4">
-                <div className="flex items-center justify-between">
-                  <label
-                    className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <span
-                    onClick={() => router.push('/auth/signup')}
-                    className="text-sm font-semibold text-accent-base cursor-pointer hover:underline"
-                  >
-                    Sign up with Email
-                  </span>
-                </div>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                />
+          {/* Discount Banner */}
+          <div className="bg-blue-600 rounded-lg p-4 mb-6 max-w-2xl mx-auto relative">
+            <div className="flex items-center justify-between">
+              <div className="text-pure-white font-medium">
+                Save 25% off your first month
               </div>
-
-              <div className="mb-6">
-                <label
-                  className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
+              <div className="flex items-center space-x-2 text-pure-white">
+                <span className="text-sm">Use code at checkout:</span>
                 <div className="relative">
-                  <Input
-                    id="password"
-                    name="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pr-10"
-                    autoComplete="current-password"
-                  />
                   <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    onClick={handleCopyCode}
+                    className="bg-blue-400 text-blue-900 px-3 py-1 rounded text-sm font-medium flex items-center space-x-1 hover:bg-blue-300 transition-colors"
                   >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5" aria-hidden="true" />
+                    <span>FBOT4U</span>
+                    {copied ? (
+                      <Check className="w-3 h-3" />
                     ) : (
-                      <Eye className="h-5 w-5" aria-hidden="true" />
+                      <Copy className="w-3 h-3" />
                     )}
                   </button>
+
+                  {/* Copy Confirmation Message */}
+                  {showCopyMessage && (
+                    <div className="absolute top-0 left-0 right-0 bottom-0 bg-blue-400 text-blue-900 rounded text-sm font-medium flex items-center justify-center space-x-1">
+                      <Check className="w-3 h-3" />
+                      <span>Copied!</span>
+                    </div>
+                  )}
                 </div>
               </div>
-            </form>
-
-            <div className="mb-4">
-              <Button
-                onClick={handleSubmit}
-                color="primary"
-                className="w-full my-2"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Signing in...' : 'Sign in with Email'}
-              </Button>
-
-              <Button
-                onClick={() => handleOAuthSignIn('google')}
-                color="primary"
-                className="w-full my-2 relative"
-                disabled={true}
-                tooltip="OAuth sign-in requires using the Supabase auth provider."
-              >
-                <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
-                  <Image
-                    src="/images/google-logo.svg"
-                    alt="Google logo"
-                    width={20}
-                    height={20}
-                  />
-                </div>
-                <span className="flex-grow text-center">
-                  Sign in with Google
-                </span>
-              </Button>
-
-              <Button
-                onClick={() => handleOAuthSignIn('github')}
-                color="primary"
-                className="w-full my-2 relative"
-                disabled={true}
-                tooltip="OAuth sign-in requires using the Supabase auth provider."
-              >
-                <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
-                  <Image
-                    src="/images/github-mark.svg"
-                    alt="Github logo"
-                    width={20}
-                    height={20}
-                  />
-                </div>
-                <span className="flex-grow text-center">
-                  Sign in with GitHub
-                </span>
-              </Button>
             </div>
           </div>
-          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+
+          {/* Billing Toggle */}
+          <div className="flex items-center justify-center mb-4">
+            <div className="bg-gray-200 rounded-lg p-1 flex">
+              <button
+                onClick={() => setIsYearly(false)}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${!isYearly
+                  ? 'bg-blue-600 text-pure-white'
+                  : 'text-gray-600 hover:text-gray-800'
+                  }`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setIsYearly(true)}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${isYearly
+                  ? 'bg-blue-600 text-pure-white'
+                  : 'text-gray-600 hover:text-gray-800'
+                  }`}
+              >
+                Yearly <span className="text-blue-500">Save 30%</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Contact Link */}
+          <p className="text-sm text-gray-600">
+            <a href="#" className="underline hover:text-gray-800">
+              Contact us here for discounted team plans or custom plans
+            </a>
+          </p>
+        </div>
+
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {plans.map((plan, index) => (
+            <div
+              key={index}
+              className="bg-gray-50 rounded-lg p-6 relative border border-gray-200 hover:shadow-lg transition-shadow"
+            >
+              {plan.popular && (
+                <div className="absolute -top-3 right-6">
+                  <span className="bg-green-500 text-pure-white px-3 py-1 rounded-full text-xs font-medium">
+                    Most popular
+                  </span>
+                </div>
+              )}
+
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-semibold text-insulation-black mb-2">
+                  {plan.name}
+                </h3>
+                <div className="mb-4">
+                  <span className="text-4xl font-bold text-insulation-black">
+                    {plan.price}
+                  </span>
+                  <span className="text-gray-600 ml-1">{plan.period}</span>
+                </div>
+                <button
+                  onClick={() => handleCheckout(plan.name, plan.price)}
+                  className="w-full bg-blue-600 text-pure-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+                >
+                  <span>{plan.buttonText}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+                <p className="text-sm text-gray-600 mt-3 font-medium">
+                  {plan.description}
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {plan.features.map((feature, featureIndex) => (
+                  <div key={featureIndex} className="flex items-start space-x-3">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-gray-700">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default Pricing;

@@ -4,9 +4,8 @@
 }
 
 .topBar {
-  background-color: bg-color2;
+  background-color: var(--engineer-gray);
   padding: 1.5rem 12rem 1.2rem 12rem;
-  background-color: #262a2d;
   //   background-color: var(--schiphi-top-bg);
 }
 
@@ -39,6 +38,7 @@
   flex-direction: column;
   margin: 4rem 14rem 0 14rem;
 }
+
 .datasetHeaderRightAlign {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;

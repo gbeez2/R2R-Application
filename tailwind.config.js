@@ -18,7 +18,24 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif'],
+        'mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+      },
       colors: {
+        // Electrical Engineering Brand Colors
+        'electric-blue': 'var(--electric-blue)',
+        'high-voltage-orange': 'var(--high-voltage-orange)',
+        'circuit-green': 'var(--circuit-green)',
+        'pure-white': 'var(--pure-white)',
+        'engineer-gray': 'var(--engineer-gray)',
+        'circuit-silver': 'var(--circuit-silver)',
+        'insulation-black': 'var(--insulation-black)',
+        'resistor-brown': 'var(--resistor-brown)',
+        'copper-wire': 'var(--copper-wire)',
+        'pcb-green': 'var(--pcb-green)',
+
+        // Legacy accent colors
         accent: {
           base: 'var(--accent-base)',
           light: 'var(--accent-light)',
