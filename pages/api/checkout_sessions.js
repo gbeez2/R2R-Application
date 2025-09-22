@@ -1,4 +1,4 @@
-import { stripe } from '../../lib/stripe';
+import { stripe } from '@/lib/stripe';
 
 export default async function handler(req, res) {
   console.log('API route called:', req.method, req.url);

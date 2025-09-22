@@ -246,9 +246,8 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-700">
       {/* Navigation */}
       <nav
-        className={`bg-insulation-black sticky top-4 z-50 mx-4 rounded-2xl transition-transform duration-300 ease-in-out ${
-          isNavVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}
+        className={`bg-insulation-black sticky top-4 z-50 mx-4 rounded-2xl transition-transform duration-300 ease-in-out ${isNavVisible ? 'translate-y-0' : '-translate-y-full'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4">
           <div className="flex justify-between items-center h-16">
