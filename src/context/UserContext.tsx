@@ -24,15 +24,15 @@ function isAuthState(obj: any): obj is AuthState {
 
 const UserContext = createContext<UserContextProps>({
   pipeline: null,
-  setPipeline: () => { },
+  setPipeline: () => {},
   selectedModel: 'null',
-  setSelectedModel: () => { },
+  setSelectedModel: () => {},
   isAuthenticated: false,
   login: async () => ({ success: false, userRole: 'user' }),
   loginWithToken: async () => ({ success: false, userRole: 'user' }),
-  logout: async () => { },
-  unsetCredentials: async () => { },
-  register: async () => { },
+  logout: async () => {},
+  unsetCredentials: async () => {},
+  register: async () => {},
   authState: {
     isAuthenticated: false,
     email: null,
@@ -42,7 +42,7 @@ const UserContext = createContext<UserContextProps>({
   getClient: () => null,
   client: null,
   viewMode: 'admin',
-  setViewMode: () => { },
+  setViewMode: () => {},
   isSuperUser: () => false,
   createUser: async () => {
     throw new Error('createUser is not implemented in the default context');
@@ -505,8 +505,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     ]
   );
 
+  // Show a loading state instead of null to prevent 404s
   if (!isReady) {
-    return null;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
+          <p className="mt-2 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

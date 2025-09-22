@@ -1,0 +1,27 @@
+
+> r2r-dashboard@1.0.4 dev /Users/alexewig/Downloads/Dev Folder/R2R-Application
+> next dev -p 3005
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3005
+  - Environments: .env.local
+  - Experiments (use with caution):
+    · instrumentationHook
+
+ ✓ Starting...
+ ○ Compiling /instrumentation ...
+ ✓ Compiled /instrumentation in 885ms (891 modules)
+ ✓ Ready in 2.4s
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 587ms (1176 modules)
+ GET /_next/static/webpack/9193bb041e1fb151.webpack.hot-update.json 404 in 675ms
+ GET /pricing 404 in 238ms
+ GET / 404 in 233ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET / 404 in 16ms
+ GET /pricing 404 in 16ms
+ GET /_next/static/webpack/9193bb041e1fb151.webpack.hot-update.json 404 in 15ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET / 404 in 15ms
+[?25h

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { CheckCircle } from 'lucide-react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 const Success = () => {
   const router = useRouter();
@@ -24,13 +24,12 @@ const Success = () => {
         </h1>
 
         <p className="text-gray-600 mb-6">
-          Thank you for your subscription! You now have access to all premium features.
+          Thank you for your subscription! You now have access to all premium
+          features.
         </p>
 
         {sessionId && (
-          <p className="text-sm text-gray-500 mb-6">
-            Session ID: {sessionId}
-          </p>
+          <p className="text-sm text-gray-500 mb-6">Session ID: {sessionId}</p>
         )}
 
         <div className="space-y-3">

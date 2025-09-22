@@ -245,19 +245,42 @@ const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-700">
       {/* Navigation */}
-      <nav className={`bg-insulation-black sticky top-4 z-50 mx-4 rounded-2xl transition-transform duration-300 ease-in-out ${isNavVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}>
+      <nav
+        className={`bg-insulation-black sticky top-4 z-50 mx-4 rounded-2xl transition-transform duration-300 ease-in-out ${
+          isNavVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 flex items-center justify-center">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     {/* Yellow horizontal fulcrum line */}
-                    <rect x="2" y="14" width="28" height="6" rx="3" fill="#FFD700" />
+                    <rect
+                      x="2"
+                      y="14"
+                      width="28"
+                      height="6"
+                      rx="3"
+                      fill="#FFD700"
+                    />
 
                     {/* Blue square on the left */}
-                    <rect x="4" y="6" width="10" height="10" rx="2" fill="#0066CC" />
+                    <rect
+                      x="4"
+                      y="6"
+                      width="10"
+                      height="10"
+                      rx="2"
+                      fill="#0066CC"
+                    />
 
                     {/* Green circle on the right */}
                     <circle cx="22" cy="11" r="5" fill="#00CC66" />
@@ -273,10 +296,16 @@ const LoginPage: React.FC = () => {
               <div className="relative products-dropdown">
                 <div
                   className="flex items-center space-x-1 cursor-pointer"
-                  onClick={() => setIsProductsDropdownOpen(!isProductsDropdownOpen)}
+                  onClick={() =>
+                    setIsProductsDropdownOpen(!isProductsDropdownOpen)
+                  }
                 >
-                  <span className="text-pure-white hover:text-pure-white transition-colors">Products</span>
-                  <ChevronDown className={`w-4 h-4 text-pure-white transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`} />
+                  <span className="text-pure-white hover:text-pure-white transition-colors">
+                    Products
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-pure-white transition-transform ${isProductsDropdownOpen ? 'rotate-180' : ''}`}
+                  />
                 </div>
 
                 {isProductsDropdownOpen && (
@@ -285,9 +314,16 @@ const LoginPage: React.FC = () => {
                       <div className="px-4 py-2 text-sm font-medium text-insulation-black border-b border-circuit-silver/20">
                         Current Products
                       </div>
-                      <a href="/landing" className="block w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
-                        <div className="font-medium">CST VBA Macro Generator</div>
-                        <div className="text-sm text-circuit-silver">Automate CST Studio Suite workflows</div>
+                      <a
+                        href="/landing"
+                        className="block w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors"
+                      >
+                        <div className="font-medium">
+                          CST VBA Macro Generator
+                        </div>
+                        <div className="text-sm text-circuit-silver">
+                          Automate CST Studio Suite workflows
+                        </div>
                       </a>
 
                       <div className="px-4 py-2 text-sm font-medium text-insulation-black border-b border-circuit-silver/20 mt-2">
@@ -295,19 +331,33 @@ const LoginPage: React.FC = () => {
                       </div>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">HFSS Macro Generator</div>
-                        <div className="text-sm text-circuit-silver">ANSYS HFSS automation tools</div>
+                        <div className="text-sm text-circuit-silver">
+                          ANSYS HFSS automation tools
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
-                        <div className="font-medium">COMSOL Macro Generator</div>
-                        <div className="text-sm text-circuit-silver">Multiphysics simulation automation</div>
+                        <div className="font-medium">
+                          COMSOL Macro Generator
+                        </div>
+                        <div className="text-sm text-circuit-silver">
+                          Multiphysics simulation automation
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
-                        <div className="font-medium">MATLAB Script Generator</div>
-                        <div className="text-sm text-circuit-silver">Engineering computation automation</div>
+                        <div className="font-medium">
+                          MATLAB Script Generator
+                        </div>
+                        <div className="text-sm text-circuit-silver">
+                          Engineering computation automation
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
-                        <div className="font-medium">Python Engineering Tools</div>
-                        <div className="text-sm text-circuit-silver">Custom engineering script generation</div>
+                        <div className="font-medium">
+                          Python Engineering Tools
+                        </div>
+                        <div className="text-sm text-circuit-silver">
+                          Custom engineering script generation
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -316,10 +366,16 @@ const LoginPage: React.FC = () => {
               <div className="relative solutions-dropdown">
                 <div
                   className="flex items-center space-x-1 cursor-pointer"
-                  onClick={() => setIsSolutionsDropdownOpen(!isSolutionsDropdownOpen)}
+                  onClick={() =>
+                    setIsSolutionsDropdownOpen(!isSolutionsDropdownOpen)
+                  }
                 >
-                  <span className="text-pure-white hover:text-pure-white transition-colors">Solutions</span>
-                  <ChevronDown className={`w-4 h-4 text-pure-white transition-transform ${isSolutionsDropdownOpen ? 'rotate-180' : ''}`} />
+                  <span className="text-pure-white hover:text-pure-white transition-colors">
+                    Solutions
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-pure-white transition-transform ${isSolutionsDropdownOpen ? 'rotate-180' : ''}`}
+                  />
                 </div>
 
                 {isSolutionsDropdownOpen && (
@@ -330,19 +386,27 @@ const LoginPage: React.FC = () => {
                       </div>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Telecommunications</div>
-                        <div className="text-sm text-circuit-silver">5G/6G antenna design, RF optimization</div>
+                        <div className="text-sm text-circuit-silver">
+                          5G/6G antenna design, RF optimization
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Aerospace & Defense</div>
-                        <div className="text-sm text-circuit-silver">Radar systems, stealth technology</div>
+                        <div className="text-sm text-circuit-silver">
+                          Radar systems, stealth technology
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Automotive</div>
-                        <div className="text-sm text-circuit-silver">ADAS sensors, EV charging systems</div>
+                        <div className="text-sm text-circuit-silver">
+                          ADAS sensors, EV charging systems
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Medical Devices</div>
-                        <div className="text-sm text-circuit-silver">MRI coils, implantable devices</div>
+                        <div className="text-sm text-circuit-silver">
+                          MRI coils, implantable devices
+                        </div>
                       </button>
 
                       <div className="px-4 py-2 text-sm font-medium text-insulation-black border-b border-circuit-silver/20 mt-2">
@@ -350,19 +414,31 @@ const LoginPage: React.FC = () => {
                       </div>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Rapid Prototyping</div>
-                        <div className="text-sm text-circuit-silver">Accelerate design iteration cycles</div>
+                        <div className="text-sm text-circuit-silver">
+                          Accelerate design iteration cycles
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
-                        <div className="font-medium">Parameter Optimization</div>
-                        <div className="text-sm text-circuit-silver">Automated design space exploration</div>
+                        <div className="font-medium">
+                          Parameter Optimization
+                        </div>
+                        <div className="text-sm text-circuit-silver">
+                          Automated design space exploration
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Design Validation</div>
-                        <div className="text-sm text-circuit-silver">Automated testing and verification</div>
+                        <div className="text-sm text-circuit-silver">
+                          Automated testing and verification
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
-                        <div className="font-medium">Legacy System Modernization</div>
-                        <div className="text-sm text-circuit-silver">Update and optimize existing designs</div>
+                        <div className="font-medium">
+                          Legacy System Modernization
+                        </div>
+                        <div className="text-sm text-circuit-silver">
+                          Update and optimize existing designs
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -371,10 +447,16 @@ const LoginPage: React.FC = () => {
               <div className="relative resources-dropdown">
                 <div
                   className="flex items-center space-x-1 cursor-pointer"
-                  onClick={() => setIsResourcesDropdownOpen(!isResourcesDropdownOpen)}
+                  onClick={() =>
+                    setIsResourcesDropdownOpen(!isResourcesDropdownOpen)
+                  }
                 >
-                  <span className="text-pure-white hover:text-pure-white transition-colors">Resources</span>
-                  <ChevronDown className={`w-4 h-4 text-pure-white transition-transform ${isResourcesDropdownOpen ? 'rotate-180' : ''}`} />
+                  <span className="text-pure-white hover:text-pure-white transition-colors">
+                    Resources
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-pure-white transition-transform ${isResourcesDropdownOpen ? 'rotate-180' : ''}`}
+                  />
                 </div>
 
                 {isResourcesDropdownOpen && (
@@ -385,15 +467,21 @@ const LoginPage: React.FC = () => {
                       </div>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Getting Started Guide</div>
-                        <div className="text-sm text-circuit-silver">Quick setup and first macro</div>
+                        <div className="text-sm text-circuit-silver">
+                          Quick setup and first macro
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">API Reference</div>
-                        <div className="text-sm text-circuit-silver">Complete function documentation</div>
+                        <div className="text-sm text-circuit-silver">
+                          Complete function documentation
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Tutorials</div>
-                        <div className="text-sm text-circuit-silver">Step-by-step walkthroughs</div>
+                        <div className="text-sm text-circuit-silver">
+                          Step-by-step walkthroughs
+                        </div>
                       </button>
 
                       <div className="px-4 py-2 text-sm font-medium text-insulation-black border-b border-circuit-silver/20 mt-2">
@@ -401,15 +489,21 @@ const LoginPage: React.FC = () => {
                       </div>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Video Tutorials</div>
-                        <div className="text-sm text-circuit-silver">Visual learning resources</div>
+                        <div className="text-sm text-circuit-silver">
+                          Visual learning resources
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Best Practices</div>
-                        <div className="text-sm text-circuit-silver">Engineering workflow tips</div>
+                        <div className="text-sm text-circuit-silver">
+                          Engineering workflow tips
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Case Studies</div>
-                        <div className="text-sm text-circuit-silver">Real-world implementation examples</div>
+                        <div className="text-sm text-circuit-silver">
+                          Real-world implementation examples
+                        </div>
                       </button>
 
                       <div className="px-4 py-2 text-sm font-medium text-insulation-black border-b border-circuit-silver/20 mt-2">
@@ -417,30 +511,49 @@ const LoginPage: React.FC = () => {
                       </div>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Help Center</div>
-                        <div className="text-sm text-circuit-silver">FAQ and troubleshooting</div>
+                        <div className="text-sm text-circuit-silver">
+                          FAQ and troubleshooting
+                        </div>
                       </button>
                       <button className="w-full text-left px-4 py-3 hover:bg-circuit-silver/10 text-insulation-black transition-colors">
                         <div className="font-medium">Community Forum</div>
-                        <div className="text-sm text-circuit-silver">Connect with other engineers</div>
+                        <div className="text-sm text-circuit-silver">
+                          Connect with other engineers
+                        </div>
                       </button>
                     </div>
                   </div>
                 )}
               </div>
-              <span className="text-pure-white hover:text-pure-white transition-colors cursor-pointer">Enterprise</span>
-              <span className="text-pure-white hover:text-pure-white transition-colors cursor-pointer">Docs</span>
-              <a href="/pricing" className="text-pure-white hover:text-pure-white transition-colors cursor-pointer">Pricing</a>
+              <span className="text-pure-white hover:text-pure-white transition-colors cursor-pointer">
+                Enterprise
+              </span>
+              <span className="text-pure-white hover:text-pure-white transition-colors cursor-pointer">
+                Docs
+              </span>
+              <a
+                href="/pricing"
+                className="text-pure-white hover:text-pure-white transition-colors cursor-pointer"
+              >
+                Pricing
+              </a>
             </div>
 
             {/* Right side buttons */}
             <div className="flex items-center space-x-3">
-              <a href="/auth/login" className="px-4 py-2 text-pure-white hover:text-pure-white transition-colors rounded-md">
+              <a
+                href="/auth/login"
+                className="px-4 py-2 text-pure-white hover:text-pure-white transition-colors rounded-md"
+              >
                 Log In
               </a>
               <button className="px-4 py-2 text-pure-white hover:text-pure-white transition-colors rounded-md">
                 Contact
               </button>
-              <a href="/auth/signup" className="px-4 py-2 bg-pure-white text-insulation-black hover:bg-circuit-silver transition-colors rounded-md font-medium">
+              <a
+                href="/auth/signup"
+                className="px-4 py-2 bg-pure-white text-insulation-black hover:bg-circuit-silver transition-colors rounded-md font-medium"
+              >
                 Sign Up
               </a>
             </div>

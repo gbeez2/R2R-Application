@@ -27,8 +27,11 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ href, children, isActive }) => (
   <Link
     href={href}
-    className={`px-2 py-1 text-sm font-medium transition-colors ${isActive ? 'text-electric-blue' : 'text-circuit-silver hover:text-pure-white'
-      }`}
+    className={`px-2 py-1 text-sm font-medium transition-colors ${
+      isActive
+        ? 'text-electric-blue'
+        : 'text-circuit-silver hover:text-pure-white'
+    }`}
   >
     {children}
   </Link>

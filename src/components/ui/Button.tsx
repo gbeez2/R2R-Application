@@ -26,7 +26,8 @@ const colorStyles = {
   text: 'text-electric-blue hover:text-blue-700 dark:text-electric-blue dark:hover:text-blue-400',
   text_gray:
     'text-circuit-silver hover:text-insulation-black dark:text-circuit-silver dark:hover:text-pure-white',
-  disabled: 'bg-circuit-silver text-pure-white cursor-not-allowed hover:bg-circuit-silver',
+  disabled:
+    'bg-circuit-silver text-pure-white cursor-not-allowed hover:bg-circuit-silver',
   light: 'bg-circuit-silver text-insulation-black hover:bg-engineer-gray',
   transparent:
     'bg-transparent text-insulation-black hover:bg-circuit-silver dark:text-circuit-silver dark:hover:bg-engineer-gray',

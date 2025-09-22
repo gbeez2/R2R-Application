@@ -1,8 +1,8 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
 import { useEffect, useCallback } from 'react';
-import Head from 'next/head';
 
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { brandingConfig } from '@/config/brandingConfig';
@@ -21,7 +21,13 @@ function MyAppContent({ Component, pageProps }: AppProps) {
   }, []);
 
   const checkAccess = useCallback(async () => {
-    const publicRoutes = ['/auth/login', '/auth/signup', '/', '/landing', '/pricing'];
+    const publicRoutes = [
+      '/auth/login',
+      '/auth/signup',
+      '/',
+      '/landing',
+      '/pricing',
+    ];
     const userRoutes = [
       '/documents',
       '/collections',
@@ -46,7 +52,7 @@ function MyAppContent({ Component, pageProps }: AppProps) {
       return;
     }
 
-    if (!isUserRoute(currentPath)) {
+    if (!isUserRoute(currentPath) && !publicRoutes.includes(currentPath)) {
       router.replace('/documents');
     }
   }, [isAuthenticated, isSuperUser, authState.userRole, router]);
@@ -78,8 +84,15 @@ function MyApp(props: AppProps) {
     <>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <ThemeProvider
         attribute="class"

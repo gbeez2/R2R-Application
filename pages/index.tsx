@@ -41,9 +41,10 @@ const HomePage = () => {
     }
   }, [isAuthenticated, router]);
 
-  if (!isAuthenticated) {
-    return null;
-  }
+  // Don't return null - let the redirect handle the flow
+  // if (!isAuthenticated) {
+  //   return null;
+  // }
 
   return (
     <Layout includeFooter>
@@ -331,9 +332,9 @@ const HomePage = () => {
                             tooltip={
                               !window.__RUNTIME_CONFIG__
                                 ?.NEXT_PUBLIC_HATCHET_DASHBOARD_URL ||
-                                window.__RUNTIME_CONFIG__.NEXT_PUBLIC_HATCHET_DASHBOARD_URL.includes(
-                                  '__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__'
-                                ) ? (
+                              window.__RUNTIME_CONFIG__.NEXT_PUBLIC_HATCHET_DASHBOARD_URL.includes(
+                                '__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__'
+                              ) ? (
                                 <div>
                                   Hatchet Dashboard Deployment URL unavailable.
                                   <br />
